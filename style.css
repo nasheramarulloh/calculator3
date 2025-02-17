@@ -1,0 +1,194 @@
+/* Mengatur gaya untuk seluruh body halaman */
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #F2F3F5;
+  margin: 0;
+  height: 100vh;
+}
+
+/* Container utama untuk kalkulator dan history */
+.container {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px; /* Menambah jarak antara kalkulator dan riwayat */
+}
+
+/* Mengatur gaya untuk kalkulator */
+.calculator {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 380px; /* Memperlebar kalkulator */
+  height: 640px; /* Memperpanjang kalkulator */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+}
+
+
+/* Mengatur gaya untuk input tampilan kalkulator */
+.display input {
+  background-color: #ffffff;
+  width: 92%;
+  padding: 15px; /* Menambah padding agar lebih besar */
+  font-size: 2.5em; /* Membesarkan ukuran teks */
+  text-align: right;
+  border: none;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  height: 90px; /* Menambah tinggi display */
+}
+
+/* Mengatur gaya untuk tombol kalkulator */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px; /* Menambah jarak antar tombol */
+}
+
+/* Mengatur gaya untuk setiap tombol */
+.buttons button {
+  padding: 25px; /* Menambah ukuran tombol */
+  font-size: 1.8em; /* Membesarkan teks pada tombol */
+  border: none;
+  background-color: #eee;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+/* Mengatur efek hover pada tombol */
+.buttons button:hover {
+  background-color: #ddd;
+}
+
+/* Mengatur gaya untuk riwayat */
+.history {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 350px; /* Memperlebar riwayat */
+  height: 640px; /* Memperpanjang riwayat agar sama dengan kalkulator */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  font-size: 15px;
+}
+
+/* Mengatur gaya untuk daftar riwayat */
+#history {
+  list-style-type: none;
+  padding: 0;
+  max-height: 500px; /* Menyesuaikan tinggi riwayat */
+  overflow-y: auto;
+  flex-grow: 0;
+}
+
+/* Mengatur gaya untuk setiap item dalam riwayat */
+#history li {
+  background-color: #f8f8f8;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  transition: background-color 0.1s;
+  word-wrap: break-word;
+}
+
+/* Efek hover pada item riwayat */
+#history li:hover {
+  background-color: #e0e0e0;
+}
+
+/* Tombol untuk membersihkan riwayat */
+.clear-history {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: none;  /* Menghapus latar belakang tombol */
+  border: none;  /* Menghapus border tombol */
+  cursor: pointer;  /* Mengubah kursor menjadi pointer saat hover */
+}
+
+.clear-history button {
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+.clear-history .icon-trash {
+  width: 25px;
+  height: 25px;
+  transition: transform 0.2s;
+}
+
+.clear-history:hover .icon-trash {
+  transform: scale(1.2);
+}
+
+/* Mengatur gaya untuk dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+/* Gaya untuk tombol dropdown */
+.dropdown button {
+  background-color: #ffffff;
+  padding: 10px 14px;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+/* Efek hover pada tombol dropdown */
+.dropdown button:hover {
+  background-color: #d2d2d2;
+}
+
+/* Gaya untuk konten dropdown (tersembunyi secara default) */
+.dropdown-content {
+  display: none; /* Secara default, dropdown tidak ditampilkan */
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 120px;
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  border-radius: 4px;
+  top: 100%; /* Menempatkan dropdown tepat di bawah tombol */
+  left: 0;
+}
+
+/* Gaya untuk item dalam dropdown */
+.dropdown-content a {
+  padding: 8px 12px;
+  text-decoration: none;
+  display: block;
+  border-radius: 4px;
+  color: black;
+  background-color: #ffffff;
+}
+
+/* Efek hover pada item dropdown */
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+img{
+  height: 20px;
+  width: 20px;
+}
+
+
+.buttons button:hover {
+  background-color: #ddd; /* Warna saat dihover */
+  transform: scale(1.05); /* Perbesar sedikit */
+}

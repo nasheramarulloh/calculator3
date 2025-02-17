@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Temperature Calculator</title>
+    <link rel="stylesheet" href="temperature.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="temperature-calculator">
+      <!-- Dropdown menu -->
+      <div class="dropdown">
+        <button><img src="TombolMenu.png" alt="Menu" /></button>
+        <div class="dropdown-content">
+          <a href="index.html">Standard</a>
+          <a href="#">Temperature</a>
+        </div>
+      </div>
+
+      <!-- Bagian tampilan kalkulator -->
+      <div class="display">
+        <!-- Tampilan utama untuk suhu awal -->
+        <div class="primary-display" id="primary-display">0</div>
+
+        <!-- Dropdown untuk memilih unit suhu awal -->
+        <div class="unit-selector">
+          <select id="from-unit" onchange="convertTemperature()">
+            <option value="Fahrenheit">Fahrenheit</option>
+            <option value="Celsius" selected>Celsius</option>
+            <option value="Kelvin">Kelvin</option>
+          </select>
+        </div>
+
+        <!-- Tampilan sekunder untuk hasil konversi -->
+        <div class="secondary-display" id="secondary-display">0</div>
+
+        <!-- Dropdown untuk memilih unit suhu tujuan -->
+        <div class="unit-selector">
+          <select id="to-unit" onchange="convertTemperature()">
+            <option value="Celsius">Celsius</option>
+            <option value="Fahrenheit" selected>Fahrenheit</option>
+            <option value="Kelvin">Kelvin</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Bagian tombol kalkulator -->
+      <div class="buttons">
+        <button onclick="clearDisplay()" class="by">CE</button>
+        <!-- Tombol Clear -->
+        <button onclick="backspace()">⌫</button>
+        <!-- Tombol Backspace -->
+
+        <!-- Tombol angka dan simbol untuk input suhu -->
+        <button onclick="appendToDisplay('7')">7</button>
+        <button onclick="appendToDisplay('8')">8</button>
+        <button onclick="appendToDisplay('9')">9</button>
+        <button onclick="appendToDisplay('4')">4</button>
+        <button onclick="appendToDisplay('5')">5</button>
+        <button onclick="appendToDisplay('6')">6</button>
+        <button onclick="appendToDisplay('1')">1</button>
+        <button onclick="appendToDisplay('2')">2</button>
+        <button onclick="appendToDisplay('3')">3</button>
+        <button onclick="toggleSign()">+/-</button>
+        <!-- Perbaikan toggle sign -->
+        <button onclick="appendToDisplay('0')">0</button>
+        <button onclick="appendToDisplay(',')">,</button>
+        <!-- Menggunakan titik untuk desimal -->
+      </div>
+    </div>
+    
+    <script src="app.js"></script>
+  </body>
+</html>

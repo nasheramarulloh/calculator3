@@ -1,0 +1,80 @@
+/* Atur gaya dasar untuk body */
+body {
+    font-family: Arial, sans-serif; /* Font untuk teks */
+    background-color: #F2F3F5; /* Warna latar belakang gelap */
+    color: rgb(0, 0, 0); /* Warna teks */
+    margin: 0; /* Hilangkan margin default */
+    display: flex; /* Gunakan flexbox untuk tata letak */
+    justify-content: center; /* Pusatkan secara horizontal */
+    align-items: center; /* Pusatkan secara vertikal */
+  }
+  
+  /* Gaya untuk kontainer utama kalkulator */
+  .temperature-calculator {
+    background-color: #ffffff; /* Warna latar kontainer */
+    padding: 20px; /* Padding di dalam kontainer */
+    border-radius: 10px; /* Sudut membulat */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Efek bayangan */
+    width: 380px; /* Lebar kalkulator */
+  }
+  
+  /* Gaya untuk tampilan (display) */
+  .display {
+    margin-bottom: 20px; /* Jarak bawah dari bagian tombol */
+  }
+  
+  /* Tampilan utama angka besar */
+  .primary-display {
+    font-size: 2.5em; /* Ukuran font besar */
+    text-align: right; /* Rata kanan */
+    margin-bottom: 10px; /* Jarak bawah */
+  }
+  
+  /* Tampilan sekunder angka kecil */
+  .secondary-display {
+    font-size: 2em; /* Ukuran font */
+    text-align: right; /* Rata kanan */
+    margin-bottom: 5px; /* Jarak bawah */
+  }
+  
+  /* Gaya untuk dropdown */
+  .unit-selector {
+    text-align: left; /* Rata kiri */
+    margin-bottom: 10px; /* Jarak bawah */
+  }
+  
+  .unit-selector select {
+    background-color: #eee; /* Warna latar dropdown */
+    color: rgb(0, 0, 0); /* Warna teks dropdown */
+    border: none; /* Hilangkan border */
+    padding: 5px; /* Padding dalam dropdown */
+    border-radius: 5px; /* Sudut membulat */
+  }
+  
+  
+  /* Tata letak tombol */
+  .buttons {
+    display: grid; /* Gunakan grid untuk tata letak */
+    grid-template-columns: repeat(4, 1fr); /* 4 kolom dengan lebar sama */
+    gap: 10px; /* Jarak antar tombol */
+  }
+  
+  /* Gaya untuk tombol */
+  .buttons button {
+    padding: 15px; /* Padding dalam tombol */
+    font-size: 1.5em; /* Ukuran teks tombol */
+    color: rgb(0, 0, 0); /* Warna teks */
+    background-color: #eee; /* Warna latar tombol */
+    border: none; /* Hilangkan border */
+    border-radius: 5px; /* Sudut membulat */
+    transition: background-color 0.2s, transform 0.2s; /* Efek hover */
+    cursor: pointer; /* Tampilkan pointer */
+  }
+  
+  /* Efek hover untuk tombol */
+  .buttons button:hover {
+    background-color: #ddd; /* Warna saat dihover */
+    transform: scale(1.05); /* Perbesar sedikit */
+  }
+
+  
