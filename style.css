@@ -1,144 +1,146 @@
-/* Mengatur gaya untuk seluruh body halaman */
+/* Nge-styling seluruh halaman biar rapi */
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif; /* Font standar biar gampang dibaca */
   display: flex;
-  justify-content: center;
+  justify-content: center; /* Biar kontennya di tengah layar */
   align-items: center;
-  background-color: #F2F3F5;
+  background-color: #F2F3F5; /* Warna latar belakang biar enak dilihat */
   margin: 0;
-  height: 100vh;
+  height: 100vh; /* Biar full layar */
 }
 
-/* Container utama untuk kalkulator dan history */
+/* Container utama buat nampung kalkulator + history */
 .container {
   display: flex;
   align-items: flex-start;
-  gap: 40px; /* Menambah jarak antara kalkulator dan riwayat */
+  gap: 40px; /* Kasih jarak dikit biar ga dempet */
 }
 
-/* Mengatur gaya untuk kalkulator */
+/* Styling kalkulator biar keliatan keren */
 .calculator {
   background-color: #fff;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 380px; /* Memperlebar kalkulator */
-  height: 640px; /* Memperpanjang kalkulator */
+  border-radius: 10px; /* Biar ga kotak banget */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Efek bayangan biar ada dimensinya */
+  width: 380px; /* Lebar kalkulator */
+  height: 640px; /* Tinggi kalkulator */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  
 }
 
-
-/* Mengatur gaya untuk input tampilan kalkulator */
+/* Tampilan layar input kalkulator */
 .display input {
   background-color: #ffffff;
   width: 92%;
-  padding: 15px; /* Menambah padding agar lebih besar */
-  font-size: 2.5em; /* Membesarkan ukuran teks */
-  text-align: right;
+  padding: 15px; /* Tambahin padding biar gede */
+  font-size: 2.5em; /* Angkanya jadi gede biar jelas */
+  text-align: right; /* Angka ke kanan kaya kalkulator beneran */
   border: none;
   margin-bottom: 10px;
   border-radius: 5px;
-  height: 90px; /* Menambah tinggi display */
+  height: 90px; /* Biar makin lebar tampilan angkanya */
 }
 
-/* Mengatur gaya untuk tombol kalkulator */
+/* Layout tombol biar rapi */
 .buttons {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 7px; /* Menambah jarak antar tombol */
+  grid-template-columns: repeat(4, 1fr); /* 4 kolom biar kaya kalkulator asli */
+  gap: 7px; /* Jarak antar tombol */
 }
 
-/* Mengatur gaya untuk setiap tombol */
+/* Styling tombol-tombolnya */
 .buttons button {
-  padding: 25px; /* Menambah ukuran tombol */
-  font-size: 1.8em; /* Membesarkan teks pada tombol */
+  padding: 25px; /* Biar tombol gede dan enak diklik */
+  font-size: 1.8em; /* Teks di tombol jadi gede */
   border: none;
   background-color: #eee;
   cursor: pointer;
   border-radius: 8px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s; /* Animasi smooth pas hover */
 }
 
-/* Mengatur efek hover pada tombol */
+/* Efek tombol pas di-hover */
 .buttons button:hover {
-  background-color: #ddd;
+  background-color: #ddd; /* Warna tombol pas disentuh */
+  transform: scale(1.05); /* Biar ada efek sedikit membesar */
 }
 
-/* Mengatur gaya untuk riwayat */
+/* Styling bagian riwayat biar senada */
 .history {
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 350px; /* Memperlebar riwayat */
-  height: 640px; /* Memperpanjang riwayat agar sama dengan kalkulator */
+  width: 350px; /* Biar lebarnya seimbang sama kalkulator */
+  height: 640px; /* Tinggi sama kaya kalkulator */
   display: flex;
   flex-direction: column;
   position: relative;
   font-size: 15px;
 }
 
-/* Mengatur gaya untuk daftar riwayat */
+/* Nge-styling list history biar gampang dibaca */
 #history {
-  list-style-type: none;
+  list-style-type: none; /* Ngilangin bullet list */
   padding: 0;
-  max-height: 500px; /* Menyesuaikan tinggi riwayat */
-  overflow-y: auto;
+  max-height: 500px; /* Biar ga panjang banget */
+  overflow-y: auto; /* Scroll otomatis kalo kepanjangan */
   flex-grow: 0;
 }
 
-/* Mengatur gaya untuk setiap item dalam riwayat */
+/* Setiap item dalam history biar cantik */
 #history li {
   background-color: #f8f8f8;
   padding: 15px;
   border-radius: 5px;
   margin-bottom: 5px;
-  cursor: pointer;
+  cursor: pointer; /* Biar bisa diklik */
   transition: background-color 0.1s;
   word-wrap: break-word;
 }
 
-/* Efek hover pada item riwayat */
+/* Efek hover di history */
 #history li:hover {
   background-color: #e0e0e0;
 }
 
-/* Tombol untuk membersihkan riwayat */
+/* Tombol buat hapus history */
 .clear-history {
   position: absolute;
   bottom: 10px;
   right: 10px;
-  background: none;  /* Menghapus latar belakang tombol */
-  border: none;  /* Menghapus border tombol */
-  cursor: pointer;  /* Mengubah kursor menjadi pointer saat hover */
+  background: none; /* Ga ada background biar bersih */
+  border: none; /* Ga ada border */
+  cursor: pointer; /* Tangan jadi ikon pointer pas hover */
 }
 
+/* Styling ikon sampah di history */
 .clear-history button {
   cursor: pointer;
   font-size: 1.2em;
 }
 
+/* Styling ikon sampahnya */
 .clear-history .icon-trash {
   width: 25px;
   height: 25px;
-  transition: transform 0.2s;
+  transition: transform 0.2s; /* Animasi dikit biar keren */
 }
 
+/* Efek hover di ikon sampah */
 .clear-history:hover .icon-trash {
-  transform: scale(1.2);
+  transform: scale(1.2); /* Besarin dikit pas hover */
 }
 
-/* Mengatur gaya untuk dropdown */
+/* Styling dropdown buat fitur tambahan */
 .dropdown {
   position: relative;
   display: inline-block;
   margin-bottom: 10px;
 }
 
-/* Gaya untuk tombol dropdown */
+/* Tombol dropdown */
 .dropdown button {
   background-color: #ffffff;
   padding: 10px 14px;
@@ -149,25 +151,25 @@ body {
   transition: background-color 0.1s ease;
 }
 
-/* Efek hover pada tombol dropdown */
+/* Efek hover dropdown */
 .dropdown button:hover {
   background-color: #d2d2d2;
 }
 
-/* Gaya untuk konten dropdown (tersembunyi secara default) */
+/* Menu dropdown (disembunyikan awalnya) */
 .dropdown-content {
-  display: none; /* Secara default, dropdown tidak ditampilkan */
+  display: none;
   position: absolute;
   background-color: #f1f1f1;
   min-width: 120px;
   box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1);
   z-index: 1;
   border-radius: 4px;
-  top: 100%; /* Menempatkan dropdown tepat di bawah tombol */
+  top: 100%; /* Pas di bawah tombol */
   left: 0;
 }
 
-/* Gaya untuk item dalam dropdown */
+/* Item dropdown */
 .dropdown-content a {
   padding: 8px 12px;
   text-decoration: none;
@@ -177,16 +179,16 @@ body {
   background-color: #ffffff;
 }
 
-/* Efek hover pada item dropdown */
+/* Efek hover di dropdown item */
 .dropdown-content a:hover {
   background-color: #ddd;
 }
 
-img{
+/* Styling gambar biar ga aneh ukurannya */
+img {
   height: 20px;
   width: 20px;
 }
-
 
 .buttons button:hover {
   background-color: #ddd; /* Warna saat dihover */

@@ -1,184 +1,160 @@
 // Referensi ke elemen input tampilan
-const display = document.getElementById("display"); // Mengambil elemen input tampilan utama
-const historyList = document.getElementById("history"); // Mengambil elemen daftar riwayat perhitungan
+const display = document.getElementById("display"); // Ngambil elemen input tampilan buat nampilin hasil hitungan
+const historyList = document.getElementById("history"); // Ngambil elemen daftar riwayat biar keliatan history perhitungan
 
-display.value = "0"; // Mengatur nilai awal tampilan menjadi "0"
-let lastWasOperator = false; // Variabel untuk melacak apakah karakter terakhir adalah operator
+display.value = "0"; // Awal mula tampilannya nol dulu biar ga kosong
+let lastWasOperator = false; // Ngecek apakah yang terakhir diketik itu operator atau bukan
 
-// Fungsi untuk membersihkan tampilan
+// Fungsi buat ngehapus tampilan
 function clearDisplay() {
-  display.value = "0"; // Mengatur tampilan kembali ke "0"
+  display.value = "0"; // Kalo di-clear, tampilan balik lagi ke nol biar rapi
 }
 
-// Fungsi untuk memformat angka dengan titik sebagai pemisah ribuan
+// Fungsi buat format angka biar ada titik pemisah ribuannya
 function formatNumber(value) {
-  return value.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Menambahkan titik setiap tiga digit ribuan
+  return value.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Biar lebih gampang dibaca angkanya
 }
 
-// Fungsi untuk menambahkan karakter ke tampilan
+// Fungsi buat nambahin karakter ke tampilan
 function appendToDisplay(value) {
-  if (value === "*") value = "×"; // Mengubah "*" menjadi simbol perkalian "×"
-  if (value === "/") value = "÷"; // Mengubah "/" menjadi simbol pembagian "÷"
-  if (value === ",") value = ","; // Memastikan koma tetap koma
+  if (value === "*") value = "×"; // Bintang diubah jadi kali biar cakep
+  if (value === "/") value = "÷"; // Slash diubah jadi bagi biar ga bingung
+  if (value === ",") value = ","; // Koma tetap koma, jangan diubah
 
-  let lastChar = display.value.slice(-1); // Mengambil karakter terakhir dalam tampilan
+  let lastChar = display.value.slice(-1); // Ambil karakter terakhir biar bisa dicek
 
-  // Jika dua operator berturut-turut dimasukkan, ganti yang terakhir dengan yang baru
-  if (
-    ["+", "-", "×", "÷"].includes(lastChar) &&
-    ["+", "-", "×", "÷"].includes(value)
-  ) {
+  // Cek kalo ada dua operator berurutan, ganti yang terakhir aja
+  if (["+", "-", "×", "÷"].includes(lastChar) && ["+", "-", "×", "÷"].includes(value)) {
     display.value = display.value.slice(0, -1) + value;
     return;
   }
 
-  // Jika tampilan masih "0" dan yang dimasukkan adalah operator selain "-", hentikan
+  // Biar ga bisa masukin operator di awal kecuali minus
   if (display.value === "0" && ["+", "×", "÷"].includes(value)) {
     return;
   }
 
-  // Jika tampilan "0" dan pengguna memasukkan angka, ganti "0" dengan angka tersebut
-  if (
-    display.value === "0" &&
-    ![".", ",", "×", "÷", "+", "-"].includes(value)
-  ) {
+  // Kalo awalnya nol dan input angka, langsung ganti nolnya
+  if (display.value === "0" && ![".", ",", "×", "÷", "+", "-"].includes(value)) {
     display.value = value;
   } else {
-    display.value += value; // Menambahkan karakter ke tampilan
+    display.value += value; // Tambahin ke tampilan kalo input valid
   }
 
-  // Format angka agar titik sebagai pemisah ribuan tetap diterapkan
+  // Format ulang biar titik ribuan tetep ada
   display.value = formatNumber(display.value.replace(/\./g, ""));
-  lastWasOperator = ["+", "-", "×", "÷"].includes(value); // Perbarui status terakhir apakah operator atau bukan
+  lastWasOperator = ["+", "-", "×", "÷"].includes(value);
 }
 
-// Fungsi untuk menghapus karakter terakhir
+// Fungsi buat hapus satu karakter terakhir
 function backspace() {
-  display.value = display.value.slice(0, -1); // Hapus karakter terakhir
+  display.value = display.value.slice(0, -1); // Potong karakter terakhir
   if (display.value === "") {
-    display.value = "0"; // Jika kosong setelah penghapusan, setel ke "0"
+    display.value = "0"; // Kalo kosong, tampilin "0" biar ga aneh
   }
 }
 
-// Fungsi untuk menghitung hasil ekspresi
+// Fungsi buat ngitung hasil ekspresi
 function calculate() {
   try {
-    let expression = display.value.replace(/\./g, ""); // Hapus titik pemisah ribuan
-    expression = expression.replace(/\,/g, "."); // Ganti koma dengan titik agar bisa dikalkulasi
-    expression = expression.replace(/×/g, "*").replace(/÷/g, "/"); // Ganti simbol perkalian dan pembagian dengan yang bisa diproses oleh JavaScript
+    let expression = display.value.replace(/\./g, ""); // Hapus titik biar ga error
+    expression = expression.replace(/\,/g, "."); // Koma jadi titik biar bisa dihitung
+    expression = expression.replace(/×/g, "*").replace(/÷/g, "/"); // Simbol kalkulasi diubah biar JS ngerti
 
-    // Mengubah persen (%) menjadi desimal
-    // Menggunakan regex untuk menemukan angka dengan simbol persen (%) di dalam ekspresi
+    // Ubah persen jadi desimal
     expression = expression.replace(/(\d+(\.\d+)?)%/g, (match, number) => {
-      // Menemukan indeks operator sebelumnya dalam ekspresi
+      // Mencari angka yang diakhiri dengan tanda persen, seperti "10%"
       let prevOperatorIndex = expression.lastIndexOf(match) - 1;
-
-      // Mengambil karakter sebelum angka persen untuk melihat apakah itu operator matematika
+      // Menentukan operator yang ada sebelum persen (misalnya +, -, *, /)
       let prevOperator = expression[prevOperatorIndex];
-
-      // Mencari angka sebelumnya yang berada sebelum operator terakhir yang ditemukan
-      let prevNumberMatch = expression
-        .slice(0, prevOperatorIndex)
-        .match(/(\d+[\d,.]*)$/);
-
-      // Mengubah angka sebelumnya menjadi tipe float, dengan mengganti koma (,) ke titik (.)
-      let prevNumber = prevNumberMatch
-        ? parseFloat(prevNumberMatch[0].replace(/,/g, ""))
-        : 0;
-
-      // Jika ada angka sebelumnya dan operator matematika (+, -, *, /) valid, hitung persen relatif
+      // Mencari angka yang ada sebelum operator tersebut
+      let prevNumberMatch = expression.slice(0, prevOperatorIndex).match(/(\d+[\d,.]*)$/);
+      // Jika angka sebelumnya ditemukan, ubah menjadi tipe data float. Jika tidak, gunakan 0.
+      let prevNumber = prevNumberMatch ? parseFloat(prevNumberMatch[0].replace(/,/g, "")) : 0;
+    
+      // Jika ada angka sebelumnya dan operator yang valid, hitung persentase berdasarkan angka sebelumnya
       if (prevNumber && ["+", "-", "*", "/"].includes(prevOperator)) {
-        return ((prevNumber * parseFloat(number)) / 100).toString();
+        return ((prevNumber * parseFloat(number)) / 100).toString(); // Menghitung persentase dari angka sebelumnya
       }
-
-      // Jika tidak ada operator sebelumnya, hitung persen langsung (dibagi 100)
+    
+      // Jika tidak ada angka sebelumnya, hitung persentase dari angka tersebut langsung
       return (parseFloat(number) / 100).toString();
     });
-
-    const result = eval(expression); // Evaluasi ekspresi matematika
-
+    
+    const result = eval(expression); // Menjalankan ekspresi matematika dan mendapatkan hasilnya
+    
     if (result !== undefined) {
-      const formattedResult = formatNumber(result.toLocaleString("id-ID")); // Format hasil
-      addToHistory(`${display.value} = ${formattedResult}`); // Tambahkan ke riwayat
-      display.value = formattedResult; // Tampilkan hasil
+      const formattedResult = formatNumber(result.toLocaleString("id-ID")); // Memformat hasil agar lebih rapi dan mudah dibaca
+      addToHistory(`${display.value} = ${formattedResult}`); // Menambahkan hasil ke riwayat perhitungan agar bisa dilihat kembali
+      display.value = formattedResult; // Menampilkan hasil di layar
     }
-  } catch (error) {
-    alert("Perhitungan tidak valid"); // Tampilkan pesan error jika terjadi kesalahan
-  }
+    } catch (error) {
+      alert("Perhitungan tidak valid"); // Jika terjadi error, memberikan informasi kepada pengguna
+    }
+    
 }
 
-// Fungsi untuk menambahkan simbol persen
+// Fungsi buat masukin simbol persen
 function percentage() {
   if (display.value !== "") {
-    display.value += "%"; // Tambahkan simbol persen ke tampilan
+    display.value += "%"; // Tambahin persen ke tampilan
   }
 }
 
-// Fungsi untuk mengubah tanda positif/negatif
+// Fungsi buat ubah tanda positif-negatif
 function toggleSign() {
   if (display.value !== "0") {
-    display.value = display.value.startsWith("-")
-      ? display.value.substring(1)
-      : "-" + display.value;
+    display.value = display.value.startsWith("-") ? display.value.substring(1) : "-" + display.value;
   }
 }
 
-// Fungsi untuk menambahkan entri ke riwayat
+// Fungsi buat nambahin riwayat perhitungan
 function addToHistory(entry) {
-  const listItem = document.createElement("li"); // Buat elemen <li> baru
-  listItem.textContent = entry; // Tambahkan teks hasil perhitungan
+  const listItem = document.createElement("li"); // Bikin item baru di list
+  listItem.textContent = entry; // Masukin teks hasil hitungan
   listItem.onclick = function () {
-    display.value = entry.split(" = ")[0]; // Setel tampilan ke nilai sebelumnya ketika diklik
+    display.value = entry.split(" = ")[0]; // Kalo diklik, tampilin lagi perhitungannya
   };
-  historyList.appendChild(listItem); // Tambahkan ke daftar riwayat
+  historyList.appendChild(listItem); // Tambahin ke history list
 }
 
-// Fungsi untuk menghapus riwayat
+// Fungsi buat ngehapus semua history
 function clearHistory() {
-  historyList.innerHTML = ""; // Kosongkan daftar riwayat
+  historyList.innerHTML = ""; // Langsung hapus semua isi history
 }
 
-// Fungsi untuk menangani input dari keyboard
+// Fungsi buat nangkep input keyboard
 function handleKeyboardInput(event) {
   let key = event.key;
 
-  if (key === "*") key = "×"; // Ubah "*" menjadi "×"
-  if (key === "/") key = "÷"; // Ubah "/" menjadi "÷"
-  if (key === ",") key = ","; // Pastikan koma tetap koma
+  if (key === "*") key = "×";
+  if (key === "/") key = "÷";
+  if (key === ",") key = ",";
 
-  // Jika tombol yang ditekan adalah angka, operator, atau koma, tambahkan ke tampilan
-  if (
-    !isNaN(key) ||
-    key === "." ||
-    key === "," ||
-    ["+", "-", "×", "÷", "%"].includes(key)
-  ) {
+  if (!isNaN(key) || key === "." || key === "," || ["+", "-", "×", "÷", "%"].includes(key)) {
     appendToDisplay(key);
   } else if (key === "Enter") {
-    calculate(); // Hitung hasil jika tombol Enter ditekan
+    calculate();
   } else if (key === "Backspace") {
-    backspace(); // Hapus karakter terakhir jika Backspace ditekan
+    backspace();
   } else if (key === "Escape") {
-    clearDisplay(); // Bersihkan tampilan jika Escape ditekan
+    clearDisplay();
   } else if (event.shiftKey && event.key === "Tab") {
-    toggleSign(); // Ubah tanda angka jika Shift + Tab ditekan
+    toggleSign();
     event.preventDefault();
   }
 
-  // Fitur pindah ke index2.html ketika Alt + 2 ditekan
   if (event.altKey && key === "2") {
     window.location.href = "index2.html";
   }
 }
 
-document.addEventListener("keydown", handleKeyboardInput); // Tambahkan event listener untuk keyboard input
+document.addEventListener("keydown", handleKeyboardInput);
 
 // Dropdown menu
-const dropdownButton = document.querySelector(".dropdown button"); // Ambil tombol dropdown
-const dropdownContent = document.querySelector(".dropdown-content"); // Ambil isi dropdown
+const dropdownButton = document.querySelector(".dropdown button");
+const dropdownContent = document.querySelector(".dropdown-content");
 
-// Menampilkan atau menyembunyikan dropdown saat tombol diklik
 dropdownButton.addEventListener("click", function () {
-  dropdownContent.style.display =
-    dropdownContent.style.display === "block" ? "none" : "block";
+  dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
 });

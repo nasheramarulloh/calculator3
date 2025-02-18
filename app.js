@@ -1,79 +1,79 @@
-// Fungsi untuk menambahkan angka ke tampilan utama
+// Nih fungsi buat masukin angka ke layar kalkulator
 function appendToDisplay(value) {
-    const primaryDisplay = document.getElementById("primary-display"); // Ambil elemen tampilan utama
+    const primaryDisplay = document.getElementById("primary-display"); // Ambil elemen layar utama
 
-    // Jika tampilan masih "0", ganti dengan angka pertama (hindari angka tambahan)
+    // Kalo layar masih 0 dan bukan koma atau +/- yang diteken, langsung ganti aja biar gak nambahin angka aneh
     if (primaryDisplay.innerText === "0" && value !== "," && value !== "+/-") {
         primaryDisplay.innerText = value;
     } 
-    // Jika tombol koma ditekan, pastikan hanya ada satu koma dalam angka
+    // Biar gak double koma dalam satu angka, dicek dulu
     else if (value === "," && primaryDisplay.innerText.includes(",")) {
         return;
     } 
-    // Jika tombol +/- ditekan, panggil fungsi toggleSign()
+    // Buat ubah tanda positif/negatif
     else if (value === "+/-") {
         toggleSign();
     } 
-    // Tambahkan angka ke tampilan jika kondisi di atas tidak terpenuhi
+    // Kalo kondisi di atas gak kena, tambahin aja angkanya ke layar
     else {
         primaryDisplay.innerText += value;
     }
 
-    convertTemperature(); // Konversi suhu otomatis setelah input
+    convertTemperature(); // Biar suhu otomatis dikonversi tiap input, gaspol!
 }
 
-// Fungsi untuk mengubah tanda positif/negatif angka
+// Nih fungsi buat ubah angka dari positif ke negatif atau sebaliknya
 function toggleSign() {
-    const primaryDisplay = document.getElementById("primary-display"); // Ambil elemen tampilan utama
+    const primaryDisplay = document.getElementById("primary-display"); // Ambil elemen layar utama
 
-    // Jika tampilan bukan nol, ubah tanda positif/negatif
+    // Kalo layar bukan nol, kita ubah tanda
     if (primaryDisplay.innerText !== "0") {
         primaryDisplay.innerText = primaryDisplay.innerText.startsWith('-')
-            ? primaryDisplay.innerText.slice(1)  // Jika negatif, ubah ke positif
-            : '-' + primaryDisplay.innerText;   // Jika positif, ubah ke negatif
+            ? primaryDisplay.innerText.slice(1)  // Kalo udah negatif, jadi positif
+            : '-' + primaryDisplay.innerText;   // Kalo positif, jadi negatif
     }
 
-    convertTemperature(); // Perbarui hasil setelah mengubah tanda
+    convertTemperature(); // Biar suhu tetep update, mantap kan?
 }
 
-// Fungsi untuk mengosongkan tampilan utama dan sekunder
+// Ini buat nge-reset layar biar balik ke nol
 function clearDisplay() {
-    document.getElementById("primary-display").innerText = "0"; // Set tampilan utama ke nol
-    document.getElementById("secondary-display").innerText = "0"; // Set tampilan hasil ke nol
+    document.getElementById("primary-display").innerText = "0"; // Layar utama jadi nol lagi
+    document.getElementById("secondary-display").innerText = "0"; // Layar hasil juga dibalikin ke nol
 }
 
-// Fungsi untuk menghapus karakter terakhir dari tampilan utama
+// Ini buat hapus angka satu per satu, kayak fitur backspace di keyboard
 function backspace() {
-    const primaryDisplay = document.getElementById("primary-display"); // Ambil elemen tampilan utama
+    const primaryDisplay = document.getElementById("primary-display"); // Ambil layar utama
 
-    // Jika panjang teks lebih dari 1, hapus karakter terakhir
+    // Kalo masih ada lebih dari 1 karakter, hapus yang terakhir
     if (primaryDisplay.innerText.length > 1) {
         primaryDisplay.innerText = primaryDisplay.innerText.slice(0, -1);
     } else {
-        primaryDisplay.innerText = "0"; // Jika hanya tersisa satu karakter, set ke nol
+        primaryDisplay.innerText = "0"; // Kalo tinggal satu angka, balik ke nol aja
     }
 
-    convertTemperature(); // Perbarui hasil setelah menghapus karakter
+    convertTemperature(); // Biar suhu tetep update abis ngapus angka
 }
 
-// Fungsi utama untuk konversi suhu
+// Ini inti dari konversi suhu, kita main logika suhu disini
 function convertTemperature() {
-    const primaryDisplay = document.getElementById("primary-display"); // Ambil elemen tampilan utama
+    const primaryDisplay = document.getElementById("primary-display"); // Ambil layar utama
     const fromUnit = document.getElementById("from-unit").value; // Ambil satuan asal
     const toUnit = document.getElementById("to-unit").value; // Ambil satuan tujuan
     
-    // Ubah koma menjadi titik agar bisa dikonversi ke angka
+    // Ubah koma ke titik biar bisa diitung
     const inputValue = parseFloat(primaryDisplay.innerText.replace(",", "."));
 
-    // Validasi input: tampilkan pesan error jika input tidak valid
+    // Kalo input bukan angka, kasih warning
     if (isNaN(inputValue)) {
         document.getElementById("secondary-display").innerText = "Invalid Input";
         return;
     }
 
-    let convertedValue; // Variabel untuk menyimpan hasil konversi
+    let convertedValue; // Variabel buat nyimpen hasil konversi
 
-    // Logika konversi suhu berdasarkan satuan asal dan tujuan
+    // Ini logika buat konversi suhu, ada 3 jenis suhu: Celsius, Fahrenheit, Kelvin
     if (fromUnit === 'Celsius') {
         convertedValue = (toUnit === 'Fahrenheit') ? (inputValue * 9/5) + 32
                       : (toUnit === 'Kelvin') ? inputValue + 273.15
@@ -88,48 +88,48 @@ function convertTemperature() {
                       : inputValue;
     }
 
-    // Format hasil agar tidak menampilkan nol berlebih
-    const formattedValue = parseFloat(convertedValue.toFixed(10)) // Hilangkan nol di belakang koma
+    // Format hasil biar gak aneh-aneh tampilannya
+    const formattedValue = parseFloat(convertedValue.toFixed(10)) // Hilangin nol di belakang koma
         .toString().replace(".", ",");
 
     document.getElementById("secondary-display").innerText = formattedValue; // Tampilkan hasil konversi
 }
 
-// Fungsi untuk menangkap input dari keyboard
+// Nih buat nangkep input dari keyboard
 document.addEventListener("keydown", function(event) {
-    const key = event.key; // Ambil tombol yang ditekan
+    const key = event.key; // Ambil tombol yang diteken
 
-    // Cek apakah tombol yang ditekan adalah angka 0-9 atau koma
+    // Kalo yang diteken angka atau koma, masukin ke layar
     if (!isNaN(key) || key === ",") {
         appendToDisplay(key);
     }
-    // Jika tombol backspace ditekan, hapus karakter terakhir
+    // Backspace buat hapus angka terakhir
     else if (key === "Backspace") {
         backspace();
     }
-    // Jika tombol Enter ditekan, lakukan konversi suhu
+    // Enter buat langsung konversi suhu
     else if (key === "Enter") {
         convertTemperature();
     }
-    // Jika tombol "-" ditekan, ubah tanda negatif/positif
+    // "-" buat ubah tanda plus-minus
     else if (key === "-") {
         toggleSign();
     }
-    // Jika tombol Esc ditekan, hapus semua konten tampilan
+    // Esc buat reset tampilan
     else if (key === "Escape") {
         clearDisplay();
     }
-    // Pindah halaman dengan kombinasi Alt + angka
+    // Navigasi halaman pake kombinasi Alt + angka
     if (event.altKey && key === "1") {
-        window.location.href = "index.html"; // Pindah ke halaman index.html saat Alt + 1 ditekan
+        window.location.href = "index.html"; // Pindah ke halaman utama kalo Alt + 1 diteken
     }
 });
 
-// Dropdown untuk memilih unit suhu
+// Ini buat dropdown menu suhu
 const dropdownButton = document.querySelector('.dropdown button'); // Ambil tombol dropdown
-const dropdownContent = document.querySelector('.dropdown-content'); // Ambil konten dropdown
+const dropdownContent = document.querySelector('.dropdown-content'); // Ambil isi dropdown
 
-// Menambahkan event listener untuk menampilkan atau menyembunyikan dropdown saat diklik
+// Tambahin event buat nampilin dropdown pas diklik
 dropdownButton.addEventListener('click', function() {
   dropdownContent.style.display = (dropdownContent.style.display === 'block') ? 'none' : 'block';
 });
